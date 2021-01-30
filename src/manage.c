@@ -528,9 +528,24 @@ void manage_window(xcb_window_t window, xcb_get_window_attributes_cookie_t cooki
     }
 
     /* explicitly set the border width to the default */
-    if (nc->current_border_width == -1) {
+    if (nc->current_border_width <= -1) {
         nc->current_border_width = (want_floating ? config.default_floating_border_width : config.default_border_width);
     }
+
+    /* _NET_FRAME_EXTENTS: approximate frame size */
+    Rect r = {
+        nc->current_border_width, /* left */
+        nc->current_border_width, /* right */
+        render_deco_height(),     /* top */
+        nc->current_border_width, /* bottom */
+    };
+    xcb_change_property(
+        conn,
+        XCB_PROP_MODE_REPLACE,
+        window,
+        A__NET_FRAME_EXTENTS,
+        XCB_ATOM_CARDINAL, 32, 4,
+        &r);
 
     /* to avoid getting an UnmapNotify event due to reparenting, we temporarily
      * declare no interest in any state change event of this window */
