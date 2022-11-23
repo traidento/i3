@@ -268,6 +268,9 @@ struct Config {
     int number_barconfigs;
 
     tiling_drag_t tiling_drag;
+
+    /* Border radius (resloved/i3) */
+    int32_t border_radius;
 };
 
 /**

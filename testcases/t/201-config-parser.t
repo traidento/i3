@@ -515,6 +515,7 @@ my $expected_all_tokens = "ERROR: CONFIG: Expected one of these tokens: <end>, '
         bar
         font
         mode
+        border_radius
         floating_minimum_size
         floating_maximum_size
         floating_modifier
